@@ -10,158 +10,157 @@
   html, body { height: 100%; overflow: hidden; }
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f172a; color: white; display: flex; flex-direction: column; }
 
-  /* ── HEADER ── */
-  .hdr { background: #1e293b; padding: 12px 16px; display: flex; align-items: center; gap: 10px; flex-shrink: 0; border-bottom: 1px solid #334155; z-index: 10; }
-  .hdr-icon { font-size: 22px; }
-  .hdr-title { font-size: 17px; font-weight: 700; flex: 1; }
-  .hdr-badge { font-size: 11px; color: #94a3b8; background: #334155; padding: 3px 8px; border-radius: 20px; }
+  .hdr { background: #1e293b; padding: 14px 16px; display: flex; align-items: center; gap: 10px; flex-shrink: 0; border-bottom: 1px solid #334155; }
+  .hdr-icon { font-size: 26px; }
+  .hdr-title { font-size: 20px; font-weight: 700; flex: 1; }
+  .hdr-badge { font-size: 13px; color: #94a3b8; background: #334155; padding: 4px 10px; border-radius: 20px; }
 
-  /* ── STATUS ── */
-  .sbar { padding: 6px 16px; font-size: 12px; font-weight: 600; text-align: center; flex-shrink: 0; }
+  .sbar { padding: 8px 16px; font-size: 13px; font-weight: 600; text-align: center; flex-shrink: 0; }
   .sbar.loading { background: #78350f; color: #fde68a; }
   .sbar.ready   { background: #14532d; color: #86efac; }
   .sbar.error   { background: #7f1d1d; color: #fca5a5; }
 
-  /* ── TABS ── */
   .tabs { display: flex; background: #1e293b; border-bottom: 1px solid #334155; flex-shrink: 0; }
-  .tab { flex: 1; padding: 11px; text-align: center; font-size: 13px; font-weight: 700; color: #64748b; cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.15s; }
+  .tab { flex: 1; padding: 14px; text-align: center; font-size: 15px; font-weight: 700; color: #64748b; cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.15s; }
   .tab.active { color: #e8ff47; border-bottom-color: #e8ff47; }
 
-  /* ── PAGES ── */
   .page { flex: 1; display: none; flex-direction: column; overflow: hidden; }
   .page.active { display: flex; }
 
-  /* ══════════════════════════════
-     SCANNER PAGE
-  ══════════════════════════════ */
+  /* ══ SCANNER PAGE ══ */
   .scanner-page { position: relative; }
-
-  /* Camera takes full page height */
   .cam-area { flex: 1; position: relative; background: #000; overflow: hidden; }
   #main-video { width: 100%; height: 100%; object-fit: cover; }
   #main-canvas { display: none; }
 
-  /* Viewfinder overlay */
+  /* Viewfinder — positioned in TOP 45% of camera */
   .vf-overlay { position: absolute; inset: 0; pointer-events: none; }
-  .vf-box { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -60%); width: 200px; height: 200px; }
-  .vf-corner { position: absolute; width: 32px; height: 32px; border-color: #e8ff47; border-style: solid; }
-  .vf-tl { top: 0; left: 0; border-width: 3px 0 0 3px; border-radius: 4px 0 0 0; }
-  .vf-tr { top: 0; right: 0; border-width: 3px 3px 0 0; border-radius: 0 4px 0 0; }
-  .vf-bl { bottom: 0; left: 0; border-width: 0 0 3px 3px; border-radius: 0 0 0 4px; }
-  .vf-br { bottom: 0; right: 0; border-width: 0 3px 3px 0; border-radius: 0 0 4px 0; }
-  .vf-line { position: absolute; left: 10px; right: 10px; height: 2px; background: linear-gradient(90deg, transparent, #e8ff47, transparent); animation: vfscan 2s ease-in-out infinite; top: 50%; }
-  @keyframes vfscan { 0%,100%{top:10px;opacity:0} 10%,90%{opacity:1} 50%{top:calc(100% - 10px)} }
+  .vf-box {
+    position: absolute;
+    top: 12%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 220px;
+    height: 220px;
+  }
+  .vf-corner { position: absolute; width: 36px; height: 36px; border-color: #e8ff47; border-style: solid; }
+  .vf-tl { top: 0; left: 0; border-width: 4px 0 0 4px; border-radius: 4px 0 0 0; }
+  .vf-tr { top: 0; right: 0; border-width: 4px 4px 0 0; border-radius: 0 4px 0 0; }
+  .vf-bl { bottom: 0; left: 0; border-width: 0 0 4px 4px; border-radius: 0 0 0 4px; }
+  .vf-br { bottom: 0; right: 0; border-width: 0 4px 4px 0; border-radius: 0 0 4px 0; }
+  .vf-line { position: absolute; left: 10px; right: 10px; height: 2px; background: linear-gradient(90deg, transparent, #e8ff47, transparent); animation: vfscan 2s ease-in-out infinite; top: 10px; }
+  @keyframes vfscan { 0%,100%{top:10px;opacity:0} 10%,90%{opacity:1} 50%{top:calc(100% - 12px)} }
 
-  /* Scan status indicator */
-  .scan-status { position: absolute; bottom: 14px; left: 0; right: 0; text-align: center; }
-  .scan-status-pill { display: inline-flex; align-items: center; gap: 6px; background: rgba(0,0,0,0.6); border-radius: 20px; padding: 6px 14px; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.8); }
-  .scan-dot { width: 8px; height: 8px; border-radius: 50%; background: #e8ff47; animation: pulse 1.2s ease-in-out infinite; flex-shrink: 0; }
+  /* Scan pill — sits just below the viewfinder box */
+  .scan-status { position: absolute; top: calc(12% + 230px); left: 0; right: 0; display: flex; justify-content: center; }
+  .scan-status-pill { display: inline-flex; align-items: center; gap: 8px; background: rgba(0,0,0,0.65); border-radius: 20px; padding: 8px 18px; font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.85); }
+  .scan-dot { width: 10px; height: 10px; border-radius: 50%; background: #e8ff47; animation: pulse 1.2s ease-in-out infinite; flex-shrink: 0; }
   @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.7)} }
-  .scan-dot.found { background: #4ade80; animation: none; }
+  .scan-dot.found    { background: #4ade80; animation: none; }
   .scan-dot.inactive { background: #64748b; animation: none; }
 
-  /* ── RESULT CARD — slides up from bottom ── */
+  /* Result card — slides up from bottom */
   .result-card {
     position: absolute; bottom: 0; left: 0; right: 0;
     background: #1e293b; border-radius: 24px 24px 0 0;
     border-top: 1px solid #334155;
     transform: translateY(100%);
     transition: transform 0.35s cubic-bezier(0.34, 1.2, 0.64, 1);
-    z-index: 20; max-height: 60%;
+    z-index: 20;
+    max-height: 58%;
     overflow-y: auto;
-    padding: 0 0 32px;
+    padding-bottom: 28px;
   }
   .result-card.show { transform: translateY(0); }
 
-  .card-handle { width: 40px; height: 4px; background: #334155; border-radius: 2px; margin: 10px auto 14px; }
-
+  .card-handle { width: 44px; height: 5px; background: #334155; border-radius: 3px; margin: 12px auto 12px; }
   .card-color-bar { height: 5px; margin: 0 16px 14px; border-radius: 3px; }
 
-  .card-cat-row { padding: 0 16px 10px; text-align: center; }
-  .card-cat-label { font-size: 10px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
-  .card-cat-val { font-size: 18px; font-weight: 900; color: white; line-height: 1.3; }
+  .card-cat-row { padding: 0 16px 12px; text-align: center; }
+  .card-cat-label { font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
+  .card-cat-val { font-size: 20px; font-weight: 900; color: white; line-height: 1.3; }
 
-  .card-main-field { margin: 0 16px 10px; background: #0f172a; border-radius: 12px; padding: 12px 14px; text-align: center; border: 1px solid #334155; }
-  .card-main-label { font-size: 10px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 3px; }
-  .card-main-val { font-size: 22px; font-weight: 900; color: #e8ff47; letter-spacing: 1px; word-break: break-all; }
+  .card-main-field { margin: 0 16px 10px; background: #0f172a; border-radius: 14px; padding: 14px 16px; text-align: center; border: 1px solid #334155; }
+  .card-main-label { font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+  .card-main-val { font-size: 28px; font-weight: 900; color: #e8ff47; letter-spacing: 2px; word-break: break-all; }
 
-  .card-other-fields { margin: 0 16px 10px; background: #0f172a; border-radius: 12px; overflow: hidden; border: 1px solid #334155; }
-  .card-other-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; border-bottom: 1px solid #1e293b; }
+  .card-other-fields { margin: 0 16px 10px; background: #0f172a; border-radius: 14px; overflow: hidden; border: 1px solid #334155; }
+  .card-other-row { display: flex; justify-content: space-between; align-items: center; padding: 13px 16px; border-bottom: 1px solid #1e293b; }
   .card-other-row:last-child { border-bottom: none; }
-  .card-other-label { font-size: 12px; color: #64748b; font-weight: 500; }
-  .card-other-val { font-size: 13px; font-weight: 700; color: #cbd5e1; text-align: right; word-break: break-all; max-width: 60%; }
+  .card-other-label { font-size: 14px; color: #64748b; font-weight: 600; }
+  .card-other-val { font-size: 15px; font-weight: 700; color: #cbd5e1; text-align: right; word-break: break-all; max-width: 60%; }
   .card-other-val.empty { color: #334155; font-style: italic; font-weight: 400; }
 
-  .card-disassembled { margin: 0 16px 10px; background: #450a0a; border: 2px solid #ef4444; border-radius: 12px; padding: 10px 14px; text-align: center; display: none; }
-  .card-disassembled-text { font-size: 14px; font-weight: 900; color: #fca5a5; letter-spacing: 1px; }
+  .card-disassembled { margin: 0 16px 10px; background: #450a0a; border: 2px solid #ef4444; border-radius: 12px; padding: 12px 14px; text-align: center; display: none; }
+  .card-disassembled-text { font-size: 15px; font-weight: 900; color: #fca5a5; letter-spacing: 1px; }
 
-  /* ══════════════════════════════
-     SEARCH PAGE
-  ══════════════════════════════ */
-  .search-page { overflow-y: auto; padding: 14px; gap: 12px; }
+  /* Start cam button */
+  #cam-start-wrap { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; z-index: 5; }
+  #btn-start-cam { background: #e8ff47; color: #0f172a; border: none; border-radius: 16px; padding: 18px 36px; font-size: 18px; font-weight: 800; cursor: pointer; }
 
-  .search-card { background: #1e293b; border-radius: 16px; padding: 14px; border: 1px solid #334155; }
-  .search-card-label { font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 3px; }
-  .search-card-hint { font-size: 11px; color: #475569; margin-bottom: 10px; }
-  .search-row { display: flex; gap: 8px; }
+  /* ══ SEARCH PAGE ══ */
+  .search-page { overflow-y: auto; padding: 16px; gap: 14px; }
+
+  .search-card { background: #1e293b; border-radius: 18px; padding: 16px; border: 1px solid #334155; }
+  .search-card-label { font-size: 13px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 4px; }
+  .search-card-hint { font-size: 13px; color: #475569; margin-bottom: 12px; }
+  .search-row { display: flex; gap: 10px; }
   .search-row input {
-    flex: 1; padding: 14px; border: 2px solid #334155; border-radius: 12px;
-    font-size: 20px; font-weight: 700; outline: none; background: #0f172a;
+    flex: 1; padding: 16px 14px; border: 2px solid #334155; border-radius: 14px;
+    font-size: 22px; font-weight: 700; outline: none; background: #0f172a;
     color: white; letter-spacing: 1.5px; min-width: 0; transition: border-color 0.15s;
   }
   .search-row input:focus { border-color: #6366f1; }
-  .search-row input::placeholder { color: #334155; font-size: 14px; font-weight: 400; letter-spacing: 0; }
-  .btn-go { padding: 14px 18px; background: #6366f1; color: white; border: none; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; flex-shrink: 0; }
+  .search-row input::placeholder { color: #334155; font-size: 15px; font-weight: 400; letter-spacing: 0; }
+  .btn-go { padding: 16px 20px; background: #6366f1; color: white; border: none; border-radius: 14px; font-size: 17px; font-weight: 700; cursor: pointer; flex-shrink: 0; }
   .btn-go:disabled { opacity: 0.35; }
   .btn-go:active { opacity: 0.8; }
 
-  .section-label { font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.8px; padding: 0 2px; margin-top: 4px; }
-  .recent-list { display: flex; flex-direction: column; gap: 6px; }
-  .recent-item { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 11px 14px; display: flex; align-items: center; gap: 10px; cursor: pointer; }
+  .section-label { font-size: 13px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.8px; padding: 0 2px; margin-top: 4px; }
+  .recent-list { display: flex; flex-direction: column; gap: 8px; }
+  .recent-item { background: #1e293b; border: 1px solid #334155; border-radius: 14px; padding: 14px 16px; display: flex; align-items: center; gap: 12px; cursor: pointer; }
   .recent-item:active { background: #2d3f55; }
-  .recent-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .recent-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
   .recent-info { flex: 1; min-width: 0; }
-  .recent-val { font-size: 14px; font-weight: 700; color: #e2e8f0; }
-  .recent-cat { font-size: 11px; color: #64748b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 1px; }
-  .recent-arrow { color: #334155; font-size: 18px; }
+  .recent-val { font-size: 16px; font-weight: 700; color: #e2e8f0; }
+  .recent-cat { font-size: 13px; color: #64748b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px; }
+  .recent-arrow { color: #334155; font-size: 20px; }
 
-  /* ══════════════════════════════
-     RESULT FULLSCREEN (search tab)
-  ══════════════════════════════ */
+  /* ══ FULLSCREEN RESULT (search tab) ══ */
   .overlay { display: none; position: fixed; inset: 0; z-index: 500; flex-direction: column; }
   .overlay.show { display: flex; }
-  .res-topbar { padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; background: rgba(0,0,0,0.2); flex-shrink: 0; }
-  .res-topbar-title { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.7); }
-  .btn-close { background: rgba(0,0,0,0.25); border: none; color: white; font-size: 13px; font-weight: 700; padding: 7px 14px; border-radius: 8px; cursor: pointer; }
-  .res-body { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 20px 16px 28px; gap: 10px; overflow-y: auto; }
-  .res-icon { font-size: 48px; text-align: center; }
-  .res-cat-box { background: rgba(0,0,0,0.2); border: 1.5px solid rgba(255,255,255,0.3); border-radius: 16px; padding: 14px 16px; text-align: center; }
-  .res-cat-label { font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
-  .res-cat-val { font-size: 19px; font-weight: 900; color: white; line-height: 1.3; }
-  .res-main-field { background: rgba(255,255,255,0.18); border: 2px solid rgba(255,255,255,0.5); border-radius: 16px; padding: 14px 16px; text-align: center; }
-  .res-main-label { font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
-  .res-main-val { font-size: 26px; font-weight: 900; color: white; letter-spacing: 1px; word-break: break-all; }
-  .res-other-fields { background: rgba(0,0,0,0.2); border-radius: 14px; overflow: hidden; }
-  .res-other-row { display: flex; justify-content: space-between; align-items: center; padding: 11px 14px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .res-topbar { padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; background: rgba(0,0,0,0.2); flex-shrink: 0; }
+  .res-topbar-title { font-size: 15px; font-weight: 600; color: rgba(255,255,255,0.7); }
+  .btn-close { background: rgba(0,0,0,0.25); border: none; color: white; font-size: 15px; font-weight: 700; padding: 9px 18px; border-radius: 10px; cursor: pointer; }
+  .res-body { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 20px 16px 32px; gap: 12px; overflow-y: auto; }
+  .res-icon { font-size: 52px; text-align: center; }
+  .res-cat-box { background: rgba(0,0,0,0.2); border: 1.5px solid rgba(255,255,255,0.3); border-radius: 18px; padding: 16px 18px; text-align: center; }
+  .res-cat-label { font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+  .res-cat-val { font-size: 22px; font-weight: 900; color: white; line-height: 1.3; }
+  .res-main-field { background: rgba(255,255,255,0.18); border: 2px solid rgba(255,255,255,0.5); border-radius: 18px; padding: 16px 18px; text-align: center; }
+  .res-main-label { font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
+  .res-main-val { font-size: 30px; font-weight: 900; color: white; letter-spacing: 2px; word-break: break-all; }
+  .res-other-fields { background: rgba(0,0,0,0.2); border-radius: 16px; overflow: hidden; }
+  .res-other-row { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border-bottom: 1px solid rgba(255,255,255,0.06); }
   .res-other-row:last-child { border-bottom: none; }
-  .res-other-label { font-size: 12px; color: rgba(255,255,255,0.45); font-weight: 500; }
-  .res-other-val { font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.85); text-align: right; word-break: break-all; max-width: 60%; }
+  .res-other-label { font-size: 14px; color: rgba(255,255,255,0.45); font-weight: 600; }
+  .res-other-val { font-size: 15px; font-weight: 700; color: rgba(255,255,255,0.9); text-align: right; word-break: break-all; max-width: 60%; }
   .res-other-val.empty { color: rgba(255,255,255,0.2); font-style: italic; font-weight: 400; }
-  .res-disassembled { display: none; background: #450a0a; border: 2px solid #ef4444; border-radius: 14px; padding: 12px 16px; text-align: center; }
-  .res-disassembled-text { font-size: 16px; font-weight: 900; color: #fca5a5; letter-spacing: 1px; }
+  .res-disassembled { display: none; background: #450a0a; border: 2px solid #ef4444; border-radius: 16px; padding: 14px 18px; text-align: center; }
+  .res-disassembled-text { font-size: 17px; font-weight: 900; color: #fca5a5; letter-spacing: 1px; }
 
   /* NOT FOUND */
   .notfound-overlay { background: #1a0000; }
-  .nf-close-bar { padding: 12px 16px; display: flex; justify-content: flex-end; flex-shrink: 0; }
+  .nf-close-bar { padding: 14px 16px; display: flex; justify-content: flex-end; flex-shrink: 0; }
   .nf-body { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 28px 24px; text-align: center; }
-  .nf-icon { font-size: 60px; margin-bottom: 14px; }
-  .nf-title { font-size: 26px; font-weight: 900; color: #ef4444; margin-bottom: 10px; }
-  .nf-val { background: rgba(239,68,68,0.15); border: 2px solid #ef4444; border-radius: 12px; padding: 10px 18px; margin-bottom: 14px; display: inline-block; }
-  .nf-val span { font-size: 18px; font-weight: 800; color: #f87171; word-break: break-all; }
-  .nf-sub { font-size: 14px; color: #f87171; line-height: 1.6; margin-bottom: 12px; }
-  .nf-tags { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin-bottom: 28px; }
-  .nf-tag { background: rgba(255,255,255,0.06); border: 1px solid rgba(239,68,68,0.3); border-radius: 20px; padding: 4px 12px; font-size: 12px; color: #fca5a5; }
-  .btn-try-again { width: 100%; padding: 15px; background: #ef4444; border: none; color: white; border-radius: 14px; font-size: 16px; font-weight: 700; cursor: pointer; }
+  .nf-icon { font-size: 68px; margin-bottom: 16px; }
+  .nf-title { font-size: 30px; font-weight: 900; color: #ef4444; margin-bottom: 12px; }
+  .nf-val { background: rgba(239,68,68,0.15); border: 2px solid #ef4444; border-radius: 14px; padding: 12px 20px; margin-bottom: 16px; display: inline-block; }
+  .nf-val span { font-size: 20px; font-weight: 800; color: #f87171; word-break: break-all; }
+  .nf-sub { font-size: 15px; color: #f87171; line-height: 1.6; margin-bottom: 14px; }
+  .nf-tags { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 28px; }
+  .nf-tag { background: rgba(255,255,255,0.06); border: 1px solid rgba(239,68,68,0.3); border-radius: 20px; padding: 6px 14px; font-size: 13px; color: #fca5a5; }
+  .btn-try-again { width: 100%; padding: 17px; background: #ef4444; border: none; color: white; border-radius: 16px; font-size: 18px; font-weight: 700; cursor: pointer; }
 </style>
 </head>
 <body>
@@ -174,7 +173,6 @@
 
 <div class="sbar loading" id="sbar">⏳ Loading data…</div>
 
-<!-- TABS -->
 <div class="tabs">
   <div class="tab active" id="tab-scan" onclick="switchTab('scan')">📷 Scanner</div>
   <div class="tab" id="tab-search" onclick="switchTab('search')">🔍 Search</div>
@@ -221,11 +219,11 @@
         <div class="card-disassembled-text">DISASSEMBLED</div>
       </div>
     </div>
-  </div>
 
-  <!-- Start camera button (shown before camera starts) -->
-  <div id="cam-start-wrap" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:5;pointer-events:none;">
-    <button id="btn-start-cam" onclick="startCamera()" style="pointer-events:all;background:#e8ff47;color:#0f172a;border:none;border-radius:14px;padding:16px 32px;font-size:16px;font-weight:800;cursor:pointer;">📷 Start Camera</button>
+    <!-- Start camera button -->
+    <div id="cam-start-wrap">
+      <button id="btn-start-cam" onclick="startCamera()">📷 Start Camera</button>
+    </div>
   </div>
 </div>
 
@@ -241,13 +239,13 @@
     </div>
   </div>
 
-  <div id="recent-wrap" style="display:none;flex-direction:column;gap:8px;">
+  <div id="recent-wrap" style="display:none; flex-direction:column; gap:8px;">
     <div class="section-label">Recent</div>
     <div class="recent-list" id="recent-list"></div>
   </div>
 </div>
 
-<!-- RESULT FULLSCREEN (search tab) -->
+<!-- FULLSCREEN RESULT -->
 <div class="overlay" id="result-overlay" style="background:#1d4ed8;">
   <div class="res-topbar">
     <span class="res-topbar-title" id="res-topbar-title">Result</span>
@@ -282,8 +280,10 @@
     <div class="nf-val"><span id="nf-val">—</span></div>
     <div class="nf-sub">No scooter matched this value.</div>
     <div class="nf-tags">
-      <span class="nf-tag">UUID</span><span class="nf-tag">Frame VIN</span>
-      <span class="nf-tag">License plate</span><span class="nf-tag">Vehicle ID</span>
+      <span class="nf-tag">UUID</span>
+      <span class="nf-tag">Frame VIN</span>
+      <span class="nf-tag">License plate</span>
+      <span class="nf-tag">Vehicle ID</span>
     </div>
     <button class="btn-try-again" onclick="document.getElementById('notfound-overlay').classList.remove('show')">✕ Close</button>
   </div>
@@ -298,12 +298,10 @@
   var dbByField = {};
   var dbReady   = false;
   var cbCounter = 0;
-
   var camStream  = null;
   var camActive  = false;
   var camAF      = null;
   var lastCode   = null;
-  var camStarted = false;
 
   var ALL_FIELDS = [
     { key: "uuid",          label: "UUID" },
@@ -316,7 +314,7 @@
   function catColor(cat) {
     if (!cat) return PALETTE[7];
     var h = 0;
-    for (var i = 0; i < cat.length; i++) { h = ((h<<5)-h)+cat.charCodeAt(i); h|=0; }
+    for (var i = 0; i < cat.length; i++) { h=((h<<5)-h)+cat.charCodeAt(i); h|=0; }
     return PALETTE[Math.abs(h) % PALETTE.length];
   }
 
@@ -329,27 +327,23 @@
   }
 
   function setScanPill(state, msg) {
-    var dot  = document.getElementById("scan-dot");
-    var text = document.getElementById("scan-pill-text");
-    dot.className = "scan-dot " + state;
-    text.textContent = msg;
+    document.getElementById("scan-dot").className = "scan-dot " + state;
+    document.getElementById("scan-pill-text").textContent = msg;
   }
 
-  /* ── TABS ── */
   function switchTab(tab) {
-    document.getElementById("tab-scan").classList.toggle("active", tab === "scan");
-    document.getElementById("tab-search").classList.toggle("active", tab === "search");
-    document.getElementById("page-scan").classList.toggle("active", tab === "scan");
-    document.getElementById("page-search").classList.toggle("active", tab === "search");
+    document.getElementById("tab-scan").classList.toggle("active", tab==="scan");
+    document.getElementById("tab-search").classList.toggle("active", tab==="search");
+    document.getElementById("page-scan").classList.toggle("active", tab==="scan");
+    document.getElementById("page-search").classList.toggle("active", tab==="search");
   }
 
   /* ── JSONP ── */
   function jsonp(url, params, cb) {
-    var name = "__cb" + (cbCounter++);
+    var name = "__cb"+(cbCounter++);
     var timer;
     window[name] = function(data) {
-      clearTimeout(timer);
-      delete window[name];
+      clearTimeout(timer); delete window[name];
       var el = document.getElementById(name);
       if (el) el.parentNode.removeChild(el);
       cb(null, data);
@@ -360,12 +354,10 @@
       if (el) el.parentNode.removeChild(el);
       cb(new Error("timeout"), null);
     }, 20000);
-    var qs = Object.keys(params).map(function(k) {
-      return encodeURIComponent(k)+"="+encodeURIComponent(params[k]);
-    }).join("&");
+    var qs = Object.keys(params).map(function(k){ return encodeURIComponent(k)+"="+encodeURIComponent(params[k]); }).join("&");
     var s = document.createElement("script");
     s.id = name;
-    s.src = url + "?" + qs + "&callback=" + name;
+    s.src = url+"?"+qs+"&callback="+name;
     document.body.appendChild(s);
   }
 
@@ -375,7 +367,7 @@
     rows.forEach(function(r) {
       ALL_FIELDS.forEach(function(f) {
         var v = String(r[f.key]||"").trim().toLowerCase();
-        if (v) dbByField[v] = { row: r, fieldKey: f.key };
+        if (v) dbByField[v] = { row:r, fieldKey:f.key };
       });
     });
   }
@@ -385,17 +377,15 @@
   function loadData() {
     try {
       var ts = parseInt(localStorage.getItem(CACHE_TS)||"0");
-      if (Date.now() - ts < CACHE_TTL) {
+      if (Date.now()-ts < CACHE_TTL) {
         var cached = JSON.parse(localStorage.getItem(CACHE_KEY)||"[]");
         if (cached.length > 0) {
-          buildIndex(cached);
-          dbReady = true;
+          buildIndex(cached); dbReady = true;
           var n = cached.length;
-          setBar("ready", "✅ " + n + " scooters ready");
-          document.getElementById("hdr-badge").textContent = n + " scooters";
+          setBar("ready","✅ "+n+" scooters ready");
+          document.getElementById("hdr-badge").textContent = n+" scooters";
           document.getElementById("btn-go").disabled = false;
-          refreshBg();
-          return;
+          refreshBg(); return;
         }
       }
     } catch(e) {}
@@ -403,60 +393,48 @@
   }
 
   function fetchFresh() {
-    setBar("loading", "⏳ Loading data…");
-    jsonp(API, { action: "all" }, function(err, rows) {
-      if (err || !Array.isArray(rows) || !rows.length) {
-        setBar("error", "❌ Load failed");
-        document.getElementById("btn-go").disabled = false;
-        return;
+    setBar("loading","⏳ Loading data…");
+    jsonp(API, {action:"all"}, function(err,rows) {
+      if (err||!Array.isArray(rows)||!rows.length) {
+        setBar("error","❌ Load failed");
+        document.getElementById("btn-go").disabled = false; return;
       }
-      buildIndex(rows);
-      dbReady = true;
+      buildIndex(rows); dbReady = true;
       var n = rows.length;
-      setBar("ready", "✅ " + n + " scooters ready");
-      document.getElementById("hdr-badge").textContent = n + " scooters";
+      setBar("ready","✅ "+n+" scooters ready");
+      document.getElementById("hdr-badge").textContent = n+" scooters";
       document.getElementById("btn-go").disabled = false;
-      try {
-        localStorage.setItem(CACHE_KEY, JSON.stringify(rows));
-        localStorage.setItem(CACHE_TS, Date.now().toString());
-      } catch(e) {}
+      try { localStorage.setItem(CACHE_KEY,JSON.stringify(rows)); localStorage.setItem(CACHE_TS,Date.now().toString()); } catch(e){}
     });
   }
 
   function refreshBg() {
-    jsonp(API, { action: "all" }, function(err, rows) {
-      if (!err && Array.isArray(rows) && rows.length) {
+    jsonp(API, {action:"all"}, function(err,rows) {
+      if (!err&&Array.isArray(rows)&&rows.length) {
         buildIndex(rows);
-        try {
-          localStorage.setItem(CACHE_KEY, JSON.stringify(rows));
-          localStorage.setItem(CACHE_TS, Date.now().toString());
-        } catch(e) {}
+        try { localStorage.setItem(CACHE_KEY,JSON.stringify(rows)); localStorage.setItem(CACHE_TS,Date.now().toString()); } catch(e){}
       }
     });
   }
 
-  /* ══════════════════════════
-     CAMERA — always running
-  ══════════════════════════ */
+  /* ── CAMERA ── */
   function startCamera() {
     document.getElementById("cam-start-wrap").style.display = "none";
-    setScanPill("", "Starting camera…");
-    navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" }, audio: false })
+    setScanPill("","Starting camera…");
+    navigator.mediaDevices.getUserMedia({ video:{ facingMode:"environment" }, audio:false })
       .then(function(stream) {
-        camStream  = stream;
-        camStarted = true;
+        camStream = stream;
         var vid = document.getElementById("main-video");
-        vid.srcObject = stream;
-        vid.play();
+        vid.srcObject = stream; vid.play();
         camActive = true;
         vid.addEventListener("loadedmetadata", function() {
-          setScanPill("", "Scanning…");
+          setScanPill("","Scanning…");
           tickCam();
         });
       })
-      .catch(function(err) {
+      .catch(function() {
         document.getElementById("cam-start-wrap").style.display = "flex";
-        setScanPill("inactive", "Camera denied");
+        setScanPill("inactive","Camera denied");
         alert("Camera access denied. Please allow camera and try again.");
       });
   }
@@ -466,101 +444,78 @@
     var vid = document.getElementById("main-video");
     var cvs = document.getElementById("main-canvas");
     if (vid.readyState === vid.HAVE_ENOUGH_DATA) {
-      cvs.width  = vid.videoWidth;
-      cvs.height = vid.videoHeight;
+      cvs.width=vid.videoWidth; cvs.height=vid.videoHeight;
       var ctx = cvs.getContext("2d");
-      ctx.drawImage(vid, 0, 0, cvs.width, cvs.height);
-      var img  = ctx.getImageData(0, 0, cvs.width, cvs.height);
-      var code = jsQR(img.data, img.width, img.height, { inversionAttempts: "dontInvert" });
-      if (code && code.data) {
-        var raw = code.data.trim();
-        if (raw !== lastCode) {
-          lastCode = raw;
-          handleCode(raw);
-        }
+      ctx.drawImage(vid,0,0,cvs.width,cvs.height);
+      var img = ctx.getImageData(0,0,cvs.width,cvs.height);
+      var code = jsQR(img.data,img.width,img.height,{inversionAttempts:"dontInvert"});
+      if (code && code.data && code.data !== lastCode) {
+        lastCode = code.data;
+        handleCode(code.data.trim());
       }
     }
     camAF = requestAnimationFrame(tickCam);
   }
 
   function handleCode(raw) {
-    var m   = raw.match(/\b\d{3}-\d{3}\b/);
+    var m = raw.match(/\b\d{3}-\d{3}\b/);
     var val = m ? m[0] : raw;
-
     if (dbReady) {
       var hit = find(val);
       if (hit) {
         vibe(80);
-        setScanPill("found", "Found: " + String(hit.row.uuid||val));
+        setScanPill("found","Found: "+String(hit.row.uuid||val));
         showCardResult(hit.row, val, hit.fieldKey);
       } else {
-        setScanPill("inactive", "Not found — keep scanning");
-        // Auto-clear after 2s to allow rescanning
-        setTimeout(function() {
-          lastCode = null;
-          setScanPill("", "Scanning…");
-        }, 2000);
+        setScanPill("inactive","Not found — keep scanning");
+        setTimeout(function() { lastCode=null; setScanPill("","Scanning…"); }, 2000);
       }
     } else {
-      jsonp(API, { query: val }, function(err, d) {
-        if (!err && d && !d.error) {
-          vibe(80);
-          setScanPill("found", "Found!");
-          showCardResult(d, val, null);
-        } else {
-          setScanPill("inactive", "Not found — keep scanning");
-          setTimeout(function() {
-            lastCode = null;
-            setScanPill("", "Scanning…");
-          }, 2000);
-        }
+      jsonp(API,{query:val},function(err,d) {
+        if (!err&&d&&!d.error) { vibe(80); setScanPill("found","Found!"); showCardResult(d,val,null); }
+        else { setScanPill("inactive","Not found"); setTimeout(function(){ lastCode=null; setScanPill("","Scanning…"); },2000); }
       });
     }
   }
 
-  /* ── SHOW CARD (scanner tab) ── */
+  /* ── CARD RESULT (scanner) ── */
   function showCardResult(row, searched, fieldKey) {
     var cat    = String(row.search_category||"—").trim();
     var status = String(row.status||"").trim().toLowerCase();
     var color  = catColor(cat);
-
     var matchedDef = ALL_FIELDS[0];
-    ALL_FIELDS.forEach(function(f) { if (f.key === fieldKey) matchedDef = f; });
+    ALL_FIELDS.forEach(function(f){ if(f.key===fieldKey) matchedDef=f; });
 
     document.getElementById("card-color-bar").style.background = color;
     document.getElementById("card-cat").textContent = cat;
     document.getElementById("card-main-label").textContent = matchedDef.label;
     document.getElementById("card-main-val").textContent = String(row[matchedDef.key]||"—").trim();
 
-    var otherHtml = "";
+    var html="";
     ALL_FIELDS.forEach(function(f) {
-      if (f.key === matchedDef.key) return;
+      if (f.key===matchedDef.key) return;
       var v = String(row[f.key]||"").trim();
-      otherHtml += '<div class="card-other-row">'
-        + '<span class="card-other-label">'+f.label+'</span>'
-        + '<span class="card-other-val'+(v?"":" empty")+'">'+(v||"—")+'</span>'
-        + '</div>';
+      html+='<div class="card-other-row">'
+        +'<span class="card-other-label">'+f.label+'</span>'
+        +'<span class="card-other-val'+(v?"":" empty")+'">'+(v||"—")+'</span>'
+        +'</div>';
     });
-    document.getElementById("card-other-fields").innerHTML = otherHtml;
-    document.getElementById("card-disassembled").style.display = status === "disassembled" ? "block" : "none";
-
+    document.getElementById("card-other-fields").innerHTML = html;
+    document.getElementById("card-disassembled").style.display = status==="disassembled"?"block":"none";
     document.getElementById("result-card").classList.add("show");
     saveRecent(searched, String(row.uuid||"").trim(), cat, color);
-
-    // Auto-reset lastCode after 3s so next different QR triggers instantly
-    setTimeout(function() { lastCode = null; }, 3000);
+    setTimeout(function(){ lastCode=null; }, 3000);
   }
 
-  /* ── SHOW FULLSCREEN (search tab) ── */
+  /* ── FULLSCREEN RESULT (search) ── */
   function showFullResult(row, searched, fieldKey) {
     var cat    = String(row.search_category||"—").trim();
     var status = String(row.status||"").trim().toLowerCase();
     var model  = String(row.model||"").toLowerCase();
     var color  = catColor(cat);
     var icon   = model.indexOf("okai")>=0?"⚡":model.indexOf("cobra")>=0?"🛵":"🛴";
-
     var matchedDef = ALL_FIELDS[0];
-    ALL_FIELDS.forEach(function(f) { if (f.key === fieldKey) matchedDef = f; });
+    ALL_FIELDS.forEach(function(f){ if(f.key===fieldKey) matchedDef=f; });
 
     var el = document.getElementById("result-overlay");
     el.style.background = color;
@@ -570,32 +525,32 @@
     document.getElementById("res-main-label").textContent = matchedDef.label;
     document.getElementById("res-main-val").textContent = String(row[matchedDef.key]||"—").trim();
 
-    var otherHtml = "";
+    var html="";
     ALL_FIELDS.forEach(function(f) {
-      if (f.key === matchedDef.key) return;
+      if (f.key===matchedDef.key) return;
       var v = String(row[f.key]||"").trim();
-      otherHtml += '<div class="res-other-row">'
+      html+='<div class="res-other-row">'
         +'<span class="res-other-label">'+f.label+'</span>'
         +'<span class="res-other-val'+(v?"":" empty")+'">'+(v||"—")+'</span>'
         +'</div>';
     });
-    document.getElementById("res-other-fields").innerHTML = otherHtml;
+    document.getElementById("res-other-fields").innerHTML = html;
     document.getElementById("res-disassembled").style.display = status==="disassembled"?"block":"none";
     el.classList.add("show");
     saveRecent(searched, String(row.uuid||"").trim(), cat, color);
   }
 
-  /* ── SEARCH (search tab) ── */
+  /* ── SEARCH ── */
   function doSearch() {
     var raw = document.getElementById("q-input").value.trim();
     if (!raw) { document.getElementById("q-input").focus(); return; }
     if (dbReady) {
       var hit = find(raw);
-      if (hit) { vibe(80); showFullResult(hit.row, raw, hit.fieldKey); }
+      if (hit) { vibe(80); showFullResult(hit.row,raw,hit.fieldKey); }
       else { vibe(300); showNF(raw); }
     } else {
-      jsonp(API, { query: raw }, function(err, d) {
-        if (!err && d && !d.error) { vibe(80); showFullResult(d, raw, null); }
+      jsonp(API,{query:raw},function(err,d) {
+        if (!err&&d&&!d.error) { vibe(80); showFullResult(d,raw,null); }
         else { vibe(300); showNF(raw); }
       });
     }
@@ -607,21 +562,21 @@
   }
 
   document.getElementById("btn-go").onclick = doSearch;
-  document.getElementById("q-input").addEventListener("keydown", function(e) { if(e.key==="Enter") doSearch(); });
+  document.getElementById("q-input").addEventListener("keydown", function(e){ if(e.key==="Enter") doSearch(); });
   document.getElementById("q-input").addEventListener("input", function() {
     if (!dbReady) return;
     var v = this.value.trim();
     if (v.length < 3) return;
     var hit = find(v);
-    if (hit) { vibe(80); showFullResult(hit.row, v, hit.fieldKey); }
+    if (hit) { vibe(80); showFullResult(hit.row,v,hit.fieldKey); }
   });
 
   /* ── RECENT ── */
-  function saveRecent(s, uuid, cat, color) {
+  function saveRecent(s,uuid,cat,color) {
     var list = getRecents().filter(function(r){ return r.s!==s; });
-    list.unshift({ s:s, u:uuid, c:cat, col:color });
+    list.unshift({s:s,u:uuid,c:cat,col:color});
     if (list.length>8) list=list.slice(0,8);
-    try { localStorage.setItem("sc_recents", JSON.stringify(list)); } catch(e){}
+    try { localStorage.setItem("sc_recents",JSON.stringify(list)); } catch(e){}
     renderRecent();
   }
   function getRecents() { try { return JSON.parse(localStorage.getItem("sc_recents")||"[]"); } catch(e){ return[]; } }
@@ -642,8 +597,7 @@
     el.querySelectorAll(".recent-item").forEach(function(item){
       item.onclick=function(){
         document.getElementById("q-input").value=this.getAttribute("data-val");
-        switchTab("search");
-        doSearch();
+        switchTab("search"); doSearch();
       };
     });
   }
