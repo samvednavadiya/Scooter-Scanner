@@ -33,16 +33,9 @@
   #main-video { width: 100%; height: 100%; object-fit: cover; }
   #main-canvas { display: none; }
 
-  /* Viewfinder — fixed in top 10%-48% of cam area so fully visible */
+  /* Viewfinder — top 8%, centered, 200x200 */
   .vf-overlay { position: absolute; inset: 0; pointer-events: none; }
-  .vf-box {
-    position: absolute;
-    top: 8%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 200px;
-    height: 200px;
-  }
+  .vf-box { position: absolute; top: 8%; left: 50%; transform: translateX(-50%); width: 200px; height: 200px; }
   .vf-corner { position: absolute; width: 32px; height: 32px; border-color: #e8ff47; border-style: solid; }
   .vf-tl { top: 0; left: 0; border-width: 4px 0 0 4px; border-radius: 4px 0 0 0; }
   .vf-tr { top: 0; right: 0; border-width: 4px 4px 0 0; border-radius: 0 4px 0 0; }
@@ -59,7 +52,7 @@
   .scan-dot.found    { background: #4ade80; animation: none; }
   .scan-dot.inactive { background: #64748b; animation: none; }
 
-  /* ══ RESULT CARD — exactly 50% height, no scroll needed ══ */
+  /* ══ RESULT CARD ══ */
   .result-card {
     position: absolute; bottom: 0; left: 0; right: 0;
     height: 52%;
@@ -76,18 +69,18 @@
   .card-handle { width: 38px; height: 4px; border-radius: 2px; margin: 8px auto 6px; background: rgba(255,255,255,0.3); flex-shrink: 0; }
 
   .card-cat-row { padding: 0 14px 8px; text-align: center; flex-shrink: 0; }
-  .card-cat-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 3px; color: rgba(255,255,255,0.6); }
-  .card-cat-val { font-size: 17px; font-weight: 900; color: white; line-height: 1.25; }
+  .card-cat-label { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; color: rgba(255,255,255,0.6); }
+  .card-cat-val { font-size: 20px; font-weight: 900; color: white; line-height: 1.25; }
 
-  .card-main-field { margin: 0 12px 8px; border-radius: 12px; padding: 10px 14px; text-align: center; background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.15); flex-shrink: 0; }
-  .card-main-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2px; color: rgba(255,255,255,0.6); }
-  .card-main-val { font-size: 24px; font-weight: 900; letter-spacing: 2px; word-break: break-all; }
+  .card-main-field { margin: 0 12px 8px; border-radius: 12px; padding: 12px 14px; text-align: center; background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.15); flex-shrink: 0; }
+  .card-main-label { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 3px; color: rgba(255,255,255,0.6); }
+  .card-main-val { font-size: 30px; font-weight: 900; letter-spacing: 2px; word-break: break-all; }
 
   .card-other-fields { margin: 0 12px 8px; border-radius: 12px; overflow: hidden; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1); flex-shrink: 0; }
-  .card-other-row { display: flex; justify-content: space-between; align-items: center; padding: 9px 14px; border-bottom: 1px solid rgba(255,255,255,0.07); }
+  .card-other-row { display: flex; justify-content: space-between; align-items: center; padding: 11px 14px; border-bottom: 1px solid rgba(255,255,255,0.07); }
   .card-other-row:last-child { border-bottom: none; }
-  .card-other-label { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.55); }
-  .card-other-val { font-size: 13px; font-weight: 700; color: white; text-align: right; word-break: break-all; max-width: 62%; }
+  .card-other-label { font-size: 15px; font-weight: 600; color: rgba(255,255,255,0.55); }
+  .card-other-val { font-size: 15px; font-weight: 700; color: white; text-align: right; word-break: break-all; max-width: 62%; }
   .card-other-val.empty { color: rgba(255,255,255,0.25); font-style: italic; font-weight: 400; }
 
   .card-disassembled { margin: 0 12px 6px; background: rgba(0,0,0,0.4); border: 2px solid #ef4444; border-radius: 10px; padding: 8px 12px; text-align: center; display: none; flex-shrink: 0; }
@@ -128,16 +121,16 @@
   .res-body { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 16px 16px 24px; gap: 10px; overflow-y: auto; }
   .res-icon { font-size: 44px; text-align: center; }
   .res-cat-box { background: rgba(0,0,0,0.2); border: 1.5px solid rgba(255,255,255,0.25); border-radius: 16px; padding: 12px 16px; text-align: center; }
-  .res-cat-label { font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
-  .res-cat-val { font-size: 20px; font-weight: 900; color: white; line-height: 1.3; }
+  .res-cat-label { font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+  .res-cat-val { font-size: 22px; font-weight: 900; color: white; line-height: 1.3; }
   .res-main-field { background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.35); border-radius: 16px; padding: 12px 16px; text-align: center; }
-  .res-main-label { font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
-  .res-main-val { font-size: 26px; font-weight: 900; color: white; letter-spacing: 2px; word-break: break-all; }
+  .res-main-label { font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+  .res-main-val { font-size: 28px; font-weight: 900; color: white; letter-spacing: 2px; word-break: break-all; }
   .res-other-fields { background: rgba(0,0,0,0.2); border-radius: 14px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); }
-  .res-other-row { display: flex; justify-content: space-between; align-items: center; padding: 11px 14px; border-bottom: 1px solid rgba(255,255,255,0.07); }
+  .res-other-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,0.07); }
   .res-other-row:last-child { border-bottom: none; }
-  .res-other-label { font-size: 14px; color: rgba(255,255,255,0.5); font-weight: 600; }
-  .res-other-val { font-size: 14px; font-weight: 700; color: white; text-align: right; word-break: break-all; max-width: 60%; }
+  .res-other-label { font-size: 15px; color: rgba(255,255,255,0.5); font-weight: 600; }
+  .res-other-val { font-size: 15px; font-weight: 700; color: white; text-align: right; word-break: break-all; max-width: 60%; }
   .res-other-val.empty { color: rgba(255,255,255,0.25); font-style: italic; font-weight: 400; }
   .res-disassembled { display: none; background: rgba(0,0,0,0.4); border: 2px solid #ef4444; border-radius: 14px; padding: 12px 16px; text-align: center; }
   .res-disassembled-text { font-size: 16px; font-weight: 900; color: #fca5a5; letter-spacing: 1px; }
@@ -178,7 +171,7 @@
     <canvas id="main-canvas"></canvas>
 
     <div class="vf-overlay">
-      <div class="vf-box">
+      <div class="vf-box" id="vf-box">
         <div class="vf-corner vf-tl"></div>
         <div class="vf-corner vf-tr"></div>
         <div class="vf-corner vf-bl"></div>
@@ -458,16 +451,61 @@
       });
   }
 
+  /* ── TICK — only scans pixels inside the viewfinder box ── */
   function tickCam() {
     if (!camActive) return;
-    var vid = document.getElementById("main-video");
-    var cvs = document.getElementById("main-canvas");
+    var vid   = document.getElementById("main-video");
+    var cvs   = document.getElementById("main-canvas");
+    var vfEl  = document.getElementById("vf-box");
+    var camEl = document.getElementById("cam-area");
+
     if (vid.readyState === vid.HAVE_ENOUGH_DATA) {
-      cvs.width=vid.videoWidth; cvs.height=vid.videoHeight;
+      var vw = vid.videoWidth;
+      var vh = vid.videoHeight;
+
+      /* Map the viewfinder box screen rect → video pixel rect */
+      var camRect = camEl.getBoundingClientRect();
+      var vfRect  = vfEl.getBoundingClientRect();
+
+      /* How video is scaled inside the cam area (object-fit: cover) */
+      var vidAspect = vw / vh;
+      var camAspect = camRect.width / camRect.height;
+      var renderW, renderH, offsetX, offsetY;
+      if (vidAspect > camAspect) {
+        /* video wider than cam — letterbox left/right */
+        renderH = camRect.height;
+        renderW = renderH * vidAspect;
+        offsetX = (camRect.width - renderW) / 2;
+        offsetY = 0;
+      } else {
+        /* video taller than cam — letterbox top/bottom */
+        renderW = camRect.width;
+        renderH = renderW / vidAspect;
+        offsetX = 0;
+        offsetY = (camRect.height - renderH) / 2;
+      }
+
+      var scaleX = vw / renderW;
+      var scaleY = vh / renderH;
+
+      /* Viewfinder position relative to cam area */
+      var vfLeft = vfRect.left - camRect.left;
+      var vfTop  = vfRect.top  - camRect.top;
+
+      /* Add small padding so edge QR codes still register */
+      var pad  = 16;
+      var cropX = Math.max(0, Math.round((vfLeft - offsetX - pad) * scaleX));
+      var cropY = Math.max(0, Math.round((vfTop  - offsetY - pad) * scaleY));
+      var cropW = Math.min(vw - cropX, Math.round((vfRect.width  + pad*2) * scaleX));
+      var cropH = Math.min(vh - cropY, Math.round((vfRect.height + pad*2) * scaleY));
+
+      cvs.width  = cropW;
+      cvs.height = cropH;
       var ctx = cvs.getContext("2d");
-      ctx.drawImage(vid,0,0,cvs.width,cvs.height);
-      var img = ctx.getImageData(0,0,cvs.width,cvs.height);
-      var code = jsQR(img.data,img.width,img.height,{inversionAttempts:"dontInvert"});
+      ctx.drawImage(vid, cropX, cropY, cropW, cropH, 0, 0, cropW, cropH);
+
+      var img  = ctx.getImageData(0, 0, cropW, cropH);
+      var code = jsQR(img.data, img.width, img.height, { inversionAttempts: "dontInvert" });
       if (code && code.data && code.data !== lastCode) {
         lastCode = code.data;
         handleCode(code.data.trim());
@@ -513,7 +551,6 @@
 
     var card = document.getElementById("result-card");
     applyTheme(card, palette);
-
     document.getElementById("card-cat").textContent = cat;
     document.getElementById("card-main-label").textContent = matchedDef.label;
     var mv = document.getElementById("card-main-val");
@@ -530,8 +567,7 @@
         +'</div>';
     });
     document.getElementById("card-other-fields").innerHTML = html;
-    var dis = document.getElementById("card-disassembled");
-    dis.style.display = status==="disassembled"?"flex":"none";
+    document.getElementById("card-disassembled").style.display = status==="disassembled"?"block":"none";
     card.classList.add("show");
     saveRecent(searched, String(row.uuid||"").trim(), cat, palette.mid);
     setTimeout(function(){ lastCode=null; }, 3000);
