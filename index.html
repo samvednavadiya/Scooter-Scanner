@@ -33,7 +33,6 @@
   #main-video { width: 100%; height: 100%; object-fit: cover; }
   #main-canvas { display: none; }
 
-  /* Viewfinder — top 8%, centered, 200x200 */
   .vf-overlay { position: absolute; inset: 0; pointer-events: none; }
   .vf-box { position: absolute; top: 8%; left: 50%; transform: translateX(-50%); width: 200px; height: 200px; }
   .vf-corner { position: absolute; width: 32px; height: 32px; border-color: #e8ff47; border-style: solid; }
@@ -44,7 +43,6 @@
   .vf-line { position: absolute; left: 8px; right: 8px; height: 2px; background: linear-gradient(90deg, transparent, #e8ff47, transparent); animation: vfscan 2s ease-in-out infinite; }
   @keyframes vfscan { 0%,100%{top:8px;opacity:0} 10%,90%{opacity:1} 50%{top:calc(100% - 10px)} }
 
-  /* Scan pill just below viewfinder */
   .scan-status { position: absolute; top: calc(8% + 210px); left: 0; right: 0; display: flex; justify-content: center; }
   .scan-status-pill { display: inline-flex; align-items: center; gap: 7px; background: rgba(0,0,0,0.65); border-radius: 20px; padding: 7px 16px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.85); }
   .scan-dot { width: 9px; height: 9px; border-radius: 50%; background: #e8ff47; animation: pulse 1.2s ease-in-out infinite; flex-shrink: 0; }
@@ -83,8 +81,11 @@
   .card-other-val { font-size: 15px; font-weight: 700; color: white; text-align: right; word-break: break-all; max-width: 62%; }
   .card-other-val.empty { color: rgba(255,255,255,0.25); font-style: italic; font-weight: 400; }
 
-  .card-disassembled { margin: 0 12px 6px; background: rgba(0,0,0,0.4); border: 2px solid #ef4444; border-radius: 10px; padding: 8px 12px; text-align: center; display: none; flex-shrink: 0; }
-  .card-disassembled-text { font-size: 14px; font-weight: 900; color: #fca5a5; letter-spacing: 1px; }
+  /* DISASSEMBLED — fullscreen overlay over the card */
+  .card-disassembled { display: none; position: absolute; inset: 0; z-index: 30; flex-direction: column; align-items: center; justify-content: center; background: rgba(127,29,29,0.97); border-radius: 22px 22px 0 0; }
+  .card-disassembled-icon { font-size: 56px; margin-bottom: 12px; }
+  .card-disassembled-text { font-size: 42px; font-weight: 900; color: #fca5a5; letter-spacing: 3px; text-align: center; }
+  .card-disassembled-sub { font-size: 16px; color: rgba(252,165,165,0.7); margin-top: 10px; text-align: center; }
 
   #cam-start-wrap { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; z-index: 5; }
   #btn-start-cam { background: #e8ff47; color: #0f172a; border: none; border-radius: 16px; padding: 18px 36px; font-size: 18px; font-weight: 800; cursor: pointer; }
@@ -198,9 +199,11 @@
         <div class="card-main-val" id="card-main-val">—</div>
       </div>
       <div class="card-other-fields" id="card-other-fields"></div>
+      <!-- DISASSEMBLED covers entire card -->
       <div class="card-disassembled" id="card-disassembled">
-        <div>⚠️</div>
+        <div class="card-disassembled-icon">⚠️</div>
         <div class="card-disassembled-text">DISASSEMBLED</div>
+        <div class="card-disassembled-sub" id="card-disassembled-uuid">—</div>
       </div>
     </div>
 
@@ -463,22 +466,18 @@
       var vw = vid.videoWidth;
       var vh = vid.videoHeight;
 
-      /* Map the viewfinder box screen rect → video pixel rect */
       var camRect = camEl.getBoundingClientRect();
       var vfRect  = vfEl.getBoundingClientRect();
 
-      /* How video is scaled inside the cam area (object-fit: cover) */
       var vidAspect = vw / vh;
       var camAspect = camRect.width / camRect.height;
       var renderW, renderH, offsetX, offsetY;
       if (vidAspect > camAspect) {
-        /* video wider than cam — letterbox left/right */
         renderH = camRect.height;
         renderW = renderH * vidAspect;
         offsetX = (camRect.width - renderW) / 2;
         offsetY = 0;
       } else {
-        /* video taller than cam — letterbox top/bottom */
         renderW = camRect.width;
         renderH = renderW / vidAspect;
         offsetX = 0;
@@ -488,11 +487,9 @@
       var scaleX = vw / renderW;
       var scaleY = vh / renderH;
 
-      /* Viewfinder position relative to cam area */
       var vfLeft = vfRect.left - camRect.left;
       var vfTop  = vfRect.top  - camRect.top;
 
-      /* Add small padding so edge QR codes still register */
       var pad  = 16;
       var cropX = Math.max(0, Math.round((vfLeft - offsetX - pad) * scaleX));
       var cropY = Math.max(0, Math.round((vfTop  - offsetY - pad) * scaleY));
@@ -567,7 +564,17 @@
         +'</div>';
     });
     document.getElementById("card-other-fields").innerHTML = html;
-    document.getElementById("card-disassembled").style.display = status==="disassembled"?"block":"none";
+
+    /* Disassembled — covers entire card */
+    var dis = document.getElementById("card-disassembled");
+    if (status === "disassembled") {
+      document.getElementById("card-disassembled-uuid").textContent = "UUID: " + String(row.uuid||"").trim();
+      dis.style.display = "flex";
+      vibe([200,100,200]);
+    } else {
+      dis.style.display = "none";
+    }
+
     card.classList.add("show");
     saveRecent(searched, String(row.uuid||"").trim(), cat, palette.mid);
     setTimeout(function(){ lastCode=null; }, 3000);
